@@ -1,0 +1,45 @@
+body {
+    background-color: #F5ECD9;
+    font-family: "Georgia", serif;
+}
+
+nav {
+    background-color: #D2BD89;
+    padding: 6px;
+}
+
+nav ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 10px;
+    font-size: 30px;
+    justify-content: flex-end;
+}
+
+a {
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+.todos-gifs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px;
+}
+
+footer {
+    background-color: #D2BD89;
+    padding: 6px;
+}
+
+footer p {
+    font-size: 30px;
+    padding: 0;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+}
