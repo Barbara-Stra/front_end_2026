@@ -25,5 +25,6 @@ function revelar() {
         document.getElementById("Alutra").classList.replace("placeholder", "card-text");
         document.getElementById("Posicao").classList.replace("placeholder", "card-text");
         document.getElementById("Rank").classList.replace("placeholder", "card-text");
+        document.getElementById("imgJogador").classList.replace("placeholder", "card-text");
     
 }
