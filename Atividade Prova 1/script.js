@@ -6,7 +6,7 @@ function MostraTabela() {
 
 function revelar() {
     const imagem = document.getElementById("imgJogador");
-    imagem.src = "_vinicius_junior.png";
+    imagem.src = "./_vinicius_junior.png";
 
     document.getElementById("Nome").innerHTML =
         'Vinícius José Paixão de Oliveira Júnior <span id="Rank" class="badge text-bg-secondary">9,5</span>';
