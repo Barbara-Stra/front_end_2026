@@ -10,6 +10,7 @@ nav {
   text-decoration: none;
   background-color: #badec0;
   border-radius: 22px;
+  font-size: 20px;
 }
 nav a { color: #3d523e; }
 nav a:hover { color: #13ec54; }
@@ -20,11 +21,14 @@ nav a:hover { color: #13ec54; }
     padding: 20px;
     background-color: #badec0;
     border-radius: 22px;
+    font-size: 36px;
 }
 
 .sub-titulo {
     text-align: center;
     display: flex;
+    font-weight: 20px;
+    font-size: 25px;
 
 }
 
