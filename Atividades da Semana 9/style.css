@@ -1,0 +1,50 @@
+.aprovado {
+    color: blue;
+}
+
+.exame {
+    color: green;
+}
+.reprovado {
+
+    color: red;
+}
+
+
+.todo-app {
+    text-align: center;
+    max-width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
+
+li.completed {
+    text-decoration: line-through;
+}
+
+button {
+    margin-top: 10px;
+}
+
+.valido {
+    color: green;
+}
+
+.invalido {
+    color: red;
+}
