@@ -85,8 +85,8 @@ botao.addEventListener('click', function(){
 function calcular_resumo(){
 
     const bandeira = document.getElementById("bandeira").value;
-    let valor = document.getElementById("valor").value;
-    let quantidade_parcelas = document.getElementById("parcelas").value;
+    let valor = Number(document.getElementById("valor").value);
+    let quantidade_parcelas = Number(document.getElementById("parcelas").value);
     let taxa = 0;
 
     switch(bandeira) {
@@ -104,10 +104,10 @@ function calcular_resumo(){
             break;
     }
 
-    let taxa_bandeira = Number(valor) * taxa;
-    let juros_totais = Number(valor) * (0.0035 * quantidade_parcelas);
+    let taxa_bandeira = valor * taxa;
+    let juros_totais = valor * (0.0035 * quantidade_parcelas);
     let taxa_mensal = 12.5 * quantidade_parcelas;
-    let valor_total = Number(valor) + taxa_bandeira + juros_totais + taxa_mensal;
+    let valor_total = valor + taxa_bandeira + juros_totais + taxa_mensal;
     let valor_parcelas = valor_total / quantidade_parcelas;
     document.getElementById("valor_taxa").value = `Valor taxa: ${taxa_bandeira.toFixed(2)}`;
     document.getElementById("valor_juros").value = `Valor juros: ${juros_totais.toFixed(2)}`;
