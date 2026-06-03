@@ -1,0 +1,218 @@
+Como colocar o Conexo no CodePen:
+
+Acesse: https://codepen.io/pen/
+Clique em "New Pen"
+Configure o React no CodePen:
+Clique no botão de engrenagem (⚙️) no canto superior direito → JS
+Em "JavaScript Preprocessor", escolha Babel
+Em "Add External Scripts", adicione estas duas URLs (uma por linha):
+texthttps://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js
+https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js
+
+Agora cole os códigos abaixo nos respectivos painéis:
+
+HTML (HTML Panel)
+HTML<div id="root"></div>
+
+CSS (CSS Panel)
+CSS* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f0f2f5;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 20px;
+}
+
+.container {
+  max-width: 620px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h1 {
+  color: #2c3e50;
+  margin-bottom: 8px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 30px 0;
+}
+
+.word-btn {
+  padding: 22px 10px;
+  font-size: 1.05rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 85px;
+}
+
+.word-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.word-btn.selected {
+  background-color: #4a9eff;
+  color: white;
+  transform: scale(1.08);
+}
+
+.actions button {
+  margin: 8px 6px;
+  padding: 12px 22px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.actions button:first-child {
+  background-color: #27ae60;
+  color: white;
+}
+
+.mistakes {
+  font-size: 1.5rem;
+  margin: 15px 0;
+}
+
+.found-groups .group {
+  margin: 15px 0;
+  padding: 18px;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+}
+
+.win {
+  margin-top: 30px;
+  color: #27ae60;
+  font-size: 1.4rem;
+}
+
+JS (JavaScript Panel)
+jsxconst { useState, useEffect } = React;
+
+const initialWords = [
+  "MAÇÃ", "BANANA", "LARANJA", "UVA",
+  "AZUL", "VERMELHO", "VERDE", "AMARELO",
+  "CACHORRO", "GATO", "PÁSSARO", "PEIXE",
+  "FUTEBOL", "BASQUETE", "VÔLEI", "TÊNIS"
+];
+
+const groups = [
+  { words: ["MAÇÃ", "BANANA", "LARANJA", "UVA"], category: "Frutas", color: "#f8d568" },
+  { words: ["AZUL", "VERMELHO", "VERDE", "AMARELO"], category: "Cores", color: "#6eb46e" },
+  { words: ["CACHORRO", "GATO", "PÁSSARO", "PEIXE"], category: "Animais", color: "#4a9eff" },
+  { words: ["FUTEBOL", "BASQUETE", "VÔLEI", "TÊNIS"], category: "Esportes", color: "#b36eff" }
+];
+
+function App() {
+  const [words, setWords] = React.useState([]);
+  const [selected, setSelected] = React.useState([]);
+  const [foundGroups, setFoundGroups] = React.useState([]);
+  const [mistakes, setMistakes] = React.useState(0);
+  const [gameWon, setGameWon] = React.useState(false);
+
+  useEffect(() => {
+    setWords([...initialWords].sort(() => Math.random() - 0.5));
+  }, []);
+
+  const toggleWord = (word) => {
+    if (selected.includes(word)) {
+      setSelected(selected.filter(w => w !== word));
+    } else if (selected.length < 4) {
+      setSelected([...selected, word]);
+    }
+  };
+
+  const submitGuess = () => {
+    if (selected.length !== 4) return;
+
+    const correctGroup = groups.find(group => 
+      group.words.every(w => selected.includes(w)) &&
+      selected.every(w => group.words.includes(w))
+    );
+
+    if (correctGroup) {
+      setFoundGroups([...foundGroups, correctGroup]);
+      setWords(words.filter(w => !selected.includes(w)));
+      setSelected([]);
+
+      if (foundGroups.length + 1 === 4) {
+        setGameWon(true);
+      }
+    } else {
+      setMistakes(m => m + 1);
+      setSelected([]);
+      if (mistakes + 1 >= 4) {
+        alert("Você perdeu! Tente novamente.");
+      }
+    }
+  };
+
+  const shuffleWords = () => {
+    setWords([...words].sort(() => Math.random() - 0.5));
+  };
+
+  return React.createElement('div', { className: 'container' },
+    React.createElement('h1', null, 'Conexo'),
+    React.createElement('p', null, 'Forme 4 grupos de 4 palavras que tenham algo em comum'),
+
+    React.createElement('div', { className: 'mistakes' }, 
+      `Erros: ${'❤️'.repeat(4 - mistakes)}`
+    ),
+
+    React.createElement('div', { className: 'found-groups' },
+      foundGroups.map((group, i) =>
+        React.createElement('div', {
+          key: i,
+          className: 'group',
+          style: { backgroundColor: group.color }
+        },
+          React.createElement('strong', null, group.category),
+          React.createElement('p', null, group.words.join(" • "))
+        )
+      )
+    ),
+
+    React.createElement('div', { className: 'grid' },
+      words.map((word, index) =>
+        React.createElement('button', {
+          key: index,
+          className: `word-btn ${selected.includes(word) ? 'selected' : ''}`,
+          onClick: () => toggleWord(word)
+        }, word)
+      )
+    ),
+
+    React.createElement('div', { className: 'actions' },
+      React.createElement('button', {
+        onClick: submitGuess,
+        disabled: selected.length !== 4
+      }, 'Enviar'),
+      React.createElement('button', { onClick: shuffleWords }, 'Embaralhar'),
+      React.createElement('button', {
+        onClick: () => window.location.reload()
+      }, 'Novo Jogo')
+    ),
+
+    gameWon && React.createElement('h2', { className: 'win' }, '🎉 Parabéns! Você completou o Conexo!')
+  );
+}
+
+ReactDOM.render(
+  React.createElement(App),
+  document.getElementById('root')
+);
